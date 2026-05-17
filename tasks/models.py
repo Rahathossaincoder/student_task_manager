@@ -1,61 +1,58 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from accounts.models import User
 
 # Create your models here.
 
 
-
-
-
-
-
-
-
-
 class Semester(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, unique=True)
     start_date = models.DateField()
     end_date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
 
 
-class Semester(models.Model):
+
+
+class Course(models.Model):
     semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, unique=True)
-    code = models.CharField(max_length=20, unique=True)
-    instructor = models.CharField(max_length=100)
+    code = models.CharField(max_length=20, unique=True, default="")    
+    instructor = models.CharField(max_length=100, default="")
     credits = models.IntegerField(default=3)
     created_at = models.DateTimeField(auto_now_add=True)
 
 
-class ClassMeeting:
+
+
+class ClassMeeting(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     days = models.CharField(max_length=20)
-    start_date = models.TimeField()
-    end_date = models.TimeField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
     room_location = models.CharField(max_length=100, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def clean(self):
-        if self.start_date > self.end_date:
+        if self.start_time > self.end_time:
             raise ValidationError("Start date can not be after end date.")
 
 
 
 
 class RoutinePreset(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, unique=True)
     days = models.CharField(max_length=20)
-    start_date = models.TimeField()
-    end_date = models.TimeField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
     created_at = models.DateTimeField(auto_now_add=True)
 
 
 class AcademicEvent(models.Model):
     status_choise = (
-        ("PENDING" , "Pending")
+        ("PENDING" , "Pending"),
         ("IN_PROGRESS" , "in_progress"),
         ("COMPLETED" , "completed")
     )
@@ -69,7 +66,7 @@ class AcademicEvent(models.Model):
             raise ValidationError('Invalid month choice')
         return month
         '''
-    course = models.ForeignKey(course, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
     type = models.CharField(max_length=200)
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
@@ -80,8 +77,8 @@ class AcademicEvent(models.Model):
 
 
 class Task(models.Model):
-    status = (
-        ("PENDING" , "Pending")
+    status_field = (
+        ("PENDING" , "Pending"),
         ("IN_PROGRESS" , "in_progress"),
         ("COMPLETED" , "completed")
     )
@@ -91,9 +88,11 @@ class Task(models.Model):
     is_advanced = models.BooleanField(default=False)
     start_at = models.DateTimeField(null=True, blank=True)
     end_at = models.DateTimeField(null=True, blank=True)
-    status = models.CharField(max_length=20, choices=status, default="pending")
+    status = models.CharField(max_length=20, choices=status_field, default="pending")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
+    due_at = models.DateTimeField()
+
 
 '''
 Habit
@@ -120,10 +119,13 @@ created_at → DateTimeField (auto_now_add=True)
 Unique constraint: (habit, date)'''
 
 class HabitCheckin(models.Model):
-    habit = models.ForeignKey(Habit, on_delete=models.CASCADE, unique=True)
-    date = models.DateField(unique=True)
+    habit = models.ForeignKey(Habit, on_delete=models.CASCADE)
+    date = models.DateField()
     checked = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('habit', 'date')
 
 
 
