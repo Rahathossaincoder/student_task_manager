@@ -7,6 +7,7 @@
 - **Question everything** ("Why this way?")
 - **Build, break, debug, learn**
 - **Read errors carefully** (they teach you)
+- **Ai will help me but never write the code
 
 ---
 
