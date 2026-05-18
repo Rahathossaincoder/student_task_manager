@@ -1,22 +1,38 @@
+import pytz
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-# Create your models here.
+
 
 '''
-User
-id (primary key, auto)
-username
-email
-password
-first_name
-last_name
-created_at
-
+AUTH_USER_MODEL = 'accounts.User' add this to settings it comes with AbstractUser
 '''
 
-class User(models.Model):
-    username = models.CharField(max_length=100)
-    email = models.EmailField(max_length=300, unique=True)
-    password = models.CharField (max_length=128)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add = True)
+class User(AbstractUser):
+    TIMEZONE_CHOICES = [(tz, tz) for tz in pytz.all_timezones]
+
+    WEEKDAY_CHOICES = [
+        ('sunday', 'Sunday'),
+        ('monday', 'Monday'),
+        ('tuesday', 'Tuesday'),
+        ('wednesday', 'Wednesday'),
+        ('thursday', 'Thursday'),
+        ('friday', 'Friday'),
+        ('saturday', 'Saturday'),
+    ]
+
+    timezone = models.CharField(
+        max_length=50,
+        choices=TIMEZONE_CHOICES,
+        default='Asia/Dhaka'
+    )
+
+    week_start_day = models.CharField(
+        max_length=10,
+        choices=WEEKDAY_CHOICES,
+        default='monday'
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.username
