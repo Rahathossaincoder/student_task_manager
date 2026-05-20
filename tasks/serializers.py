@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from tasks.models import (
     Semester, Course, ClassMeeting, RoutinePreset,
-    AcademicEvent, Task, Habit, HabitCheckin, User
+    AcademicEvent, Task, Habit, HabitCheckin
 )
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -44,8 +44,9 @@ class TaskSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         if data.get('is_advanced') and (not data.get('start_at') or not data.get('end_at')):
-                "start_at and end_at are required when is_advanced is True"
-            )
+                raise serializers.ValidationError(
+                    "start_at and end_at are required when is_advanced is True"
+                )
         return data
         
 class RoutinePresetSerializer(serializers.ModelSerializer):

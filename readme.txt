@@ -14,7 +14,7 @@ source venv/bin/activate
 -----------------------------------------------------------------------------------------------
 
 3.  python manage.py startapp tasks
-    python manage.py startapp users
+    python manage.py startapp accounts
 
 -----------------------------------------------------------------------------------------------
 
