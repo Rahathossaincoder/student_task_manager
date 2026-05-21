@@ -639,3 +639,111 @@ Do you understand the difference between read_only and write_only?
 Do you understand nested serializers?
 Do you understand SerializerMethodField for computed values?
 Ask me these questions, or tell me when you're ready to start Day 2.
+
+------------------------------------------Day 2 ends here-------------------------------------
+----------------------------------------------------------------------------------------------
+--------------------------------------Day 3 starts here--------------------------------------
+📋 DAY 3: May 21 (ViewSets + Simple CRUD) - 8 hours
+Goal: Build REST API endpoints using ViewSets for basic CRUD
+
+Your models and serializers are done. Now create the API endpoints.
+
+HOUR 0-1: Research + Understand ViewSets (30 min reading + 30 min thinking)
+Read (20 min):
+
+https://www.django-rest-framework.org/api-guide/viewsets/
+Key concepts:
+
+ViewSet = Automatic CRUD endpoints
+Router = Automatically generates URLs
+ModelViewSet = Has create, retrieve, update, delete, list
+Think (10 min):
+
+Why use ViewSet instead of APIView?
+How do routers generate URLs automatically?
+What HTTP methods do they support? (GET, POST, PUT, DELETE)
+HOUR 1-3: Create ViewSets (2 hours)
+Create file: tasks/views.py
+
+Your task: Write ViewSets for each model
+
+Questions to ask yourself:
+
+"What's the simplest ViewSet I can write?"
+"Do I need custom logic or just basic CRUD?"
+"Which serializer should I use?"
+Start with this template:
+
+Python
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from tasks.models import Course
+from tasks.serializers import CourseSerializer
+
+class CourseViewSet(ModelViewSet):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+That's it! This gives you:
+
+✅ GET /courses/ (list all)
+✅ POST /courses/ (create new)
+✅ GET /courses/1/ (get one)
+✅ PUT /courses/1/ (update)
+✅ DELETE /courses/1/ (delete)
+Your job: Write this for all 8 models
+
+HOUR 3-4: Create Router + URLs (1 hour)
+Create file: tasks/urls.py
+
+Your task: Set up routing
+
+Template:
+
+Python
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from tasks.views import CourseViewSet, SemesterViewSet, ...
+
+router = DefaultRouter()
+router.register('courses', CourseViewSet)
+router.register('semesters', SemesterViewSet)
+# Register other ViewSets...
+
+urlpatterns = [
+    path('', include(router.urls)),
+]
+Questions:
+
+Why use DefaultRouter?
+How does it auto-generate URLs?
+HOUR 4-5: Connect to main URLs (1 hour)
+Edit: student_task_manager/urls.py
+
+Your task: Include tasks URLs in main project
+
+Template:
+
+Python
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('api/tasks/', include('tasks.urls')),
+]
+HOUR 5-7: Test in Postman/Browser (2 hours)
+Test each endpoint:
+
+bash
+python manage.py runserver
+Try these in browser or Postman:
+
+http://localhost:8000/api/tasks/courses/ - List all courses
+http://localhost:8000/api/tasks/semesters/ - List semesters
+Create a new semester with POST
+Questions:
+
+Can you see your data?
+Are the serializers working?
+Does validation work?

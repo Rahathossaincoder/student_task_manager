@@ -6,14 +6,14 @@ from .views import (
 )
 
 router = DefaultRouter()
-router.register('drinks', SemesterViewSet)
-router.register('drinks', CourseViewSet)
-router.register('drinks', ClassMeetingViewSet)
-router.register('drinks', RoutinePresetViewSet)
-router.register('drinks', AcademicEventViewSet)
-router.register('drinks', TaskViewSet)
-router.register('drinks', HabitViewSet)
-router.register('drinks', HabitCheckinViewSet)
+router.register('semester', SemesterViewSet)
+router.register('courses', CourseViewSet)
+router.register('class_meeting', ClassMeetingViewSet)
+router.register('routine_preset', RoutinePresetViewSet)
+router.register('academic_event', AcademicEventViewSet)
+router.register('task_view', TaskViewSet)
+router.register('habit_view', HabitViewSet)
+router.register('habit_checkin', HabitCheckinViewSet)
 
 
 urlpatterns = [

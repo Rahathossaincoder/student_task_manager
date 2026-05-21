@@ -1,6 +1,4 @@
 from rest_framework import viewsets
-from .models import Drink
-from .serializers import DrinkSerializer
 from .models import (
     Semester, Course, ClassMeeting, RoutinePreset,
     AcademicEvent, Task, Habit, HabitCheckin
