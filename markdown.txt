@@ -747,3 +747,31 @@ Questions:
 Can you see your data?
 Are the serializers working?
 Does validation work?
+-------------------------------------------Day-3 ends here-------------------------------------
+-----------------------------------------------------------------------------------------------
+-------------------------------------------Day-4 starts----------------------------------------
+Based on your markdown and current code status:
+
+HOUR 0-1: Research
+Read about:
+
+@action decorator in ViewSets
+SerializerMethodField for computed fields
+Query filtering in DRF
+HOUR 1-4: Enhance ViewSets and Serializers
+For HabitSerializer:
+
+Add current_streak (SerializerMethodField calling get_current_streak())
+Add best_streak (SerializerMethodField calling get_best_streak())
+For TaskViewSet:
+
+Add @action for /tasks/overdue/ endpoint
+Add @action for /tasks/today/ endpoint
+For SemesterViewSet:
+
+Add @action for /semesters/{id}/summary/ endpoint
+For HabitViewSet:
+
+Add @action for /habits/{id}/streaks/ endpoint
+HOUR 4-7: Test everything
+HOUR 7-8: Commit

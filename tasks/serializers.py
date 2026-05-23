@@ -71,6 +71,13 @@ class HabitSerializer(serializers.ModelSerializer):
     checkins = HabitCheckinSerializer(many=True, read_only=True)
     current_streak = serializers.SerializerMethodField()
     best_streak = serializers.SerializerMethodField()
+    current_streak = serializers.SerializerMethodField()
+    best_streak = serializers.SerializerMethodField()
+    '''
+    SerializerMethodField: to return computed method
+    that is not in database
+    '''
+
     class Meta:
         model = Habit
         fields = '__all__'

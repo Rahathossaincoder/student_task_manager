@@ -6,13 +6,13 @@ from .views import (
 )
 
 router = DefaultRouter()
-router.register('semester', SemesterViewSet)
+router.register('semesters', SemesterViewSet)
 router.register('courses', CourseViewSet)
 router.register('class_meeting', ClassMeetingViewSet)
 router.register('routine_preset', RoutinePresetViewSet)
 router.register('academic_event', AcademicEventViewSet)
-router.register('task_view', TaskViewSet)
-router.register('habit_view', HabitViewSet)
+router.register('tasks', TaskViewSet)
+router.register('habits', HabitViewSet)
 router.register('habit_checkin', HabitCheckinViewSet)
 
 
